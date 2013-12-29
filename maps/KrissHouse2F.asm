@@ -140,7 +140,7 @@ KrissHouse2F_MapEventHeader: ; 0x7ac99
 
 	; warps
 	db 1
-	warp_def $0, $7, 3, GROUP_KRISS_HOUSE_1F, MAP_KRISS_HOUSE_1F
+	warp_def $0, $7, 1, GROUP_STARTING_AREA, MAP_STARTING_AREA
 
 	; xy triggers
 	db 0
