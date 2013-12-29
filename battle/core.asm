@@ -45,7 +45,7 @@ Function3c000: ; 3c000
 
 .asm_3c047
 	ld c, $28
-	call DelayFrames
+	call DelayFrame ; was DelayFrames
 	call Function309d
 	call Function3d873
 	ld a, d
@@ -1167,7 +1167,7 @@ Function3c716: ; 3c716
 .asm_3c7f7
 	call RefreshBattleHuds
 	ld c, $14
-	call DelayFrames
+	call DelayFrame ; was DelayFrames
 	xor a
 	ret
 ; 3c801
@@ -2081,7 +2081,7 @@ Function3cd55: ; 3cd55
 	ld a, $1
 	ld [hBGMapMode], a
 	ld c, $3c
-	call DelayFrames
+	call DelayFrame ; was DelayFrames
 	ld a, [IsInBattle]
 	dec a
 	jr nz, .asm_3cd8c
@@ -2422,7 +2422,7 @@ Function3cfa4: ; 3cfa4
 	jr nz, .asm_3d006
 	call Function3ebd8
 	ld c, $28
-	call DelayFrames
+	call DelayFrame ; was DelayFrames
 	ld a, [BattleType]
 	cp $1
 	jr nz, .asm_3cfe8
@@ -2441,7 +2441,7 @@ Function3cfa4: ; 3cfa4
 .asm_3cff5
 	call Function3ebd8
 	ld c, $28
-	call DelayFrames
+	call DelayFrame ; was DelayFrames
 	ld c, $4
 	callba Function4ea0a
 	ret
@@ -2449,7 +2449,7 @@ Function3cfa4: ; 3cfa4
 .asm_3d006
 	call Function3ebd8
 	ld c, $28
-	call DelayFrames
+	call DelayFrame ; was DelayFrames
 	call EmptyBattleTextBox
 	ld c, $3
 	callba Function11c000
@@ -3034,7 +3034,7 @@ LostBattle: ; 3d38e
 	call Function3ebd8
 
 	ld c, 40
-	call DelayFrames
+	call DelayFrame ; was DelayFrames
 
 	ld a, [$c2cc]
 	bit 0, a
@@ -3051,7 +3051,7 @@ LostBattle: ; 3d38e
 	call Function3ebd8
 
 	ld c, 40
-	call DelayFrames
+	call DelayFrame ; was DelayFrames
 
 	call EmptyBattleTextBox
 	ld c, 2
@@ -3103,7 +3103,7 @@ LostBattle: ; 3d38e
 	call Function3ebd8
 
 	ld c, 40
-	call DelayFrames
+	call DelayFrame ; was DelayFrames
 
 	ld c, $3
 	callba Function4ea0a
@@ -3160,7 +3160,7 @@ Function3d444: ; 3d444
 	ld de, .Spaces
 	call PlaceString
 	ld c, 2
-	call DelayFrames
+	call DelayFrame ; was DelayFrames
 	pop hl
 	pop de
 	pop bc
@@ -3192,7 +3192,7 @@ Function3d490: ; 3d490
 	dec b
 	jr nz, .asm_3d497
 	ld c, 2
-	call DelayFrames
+	call DelayFrame ; was DelayFrames
 	pop hl
 	pop bc
 	dec c
@@ -5103,7 +5103,7 @@ Function3e19b: ; 3e19b
 	ld hl, $5863
 	call StdBattleTextBox
 	ld c, $3c
-	call DelayFrames
+	call DelayFrame ; was DelayFrames
 
 .asm_3e1c5
 	scf
@@ -5402,7 +5402,7 @@ Function3e3ff: ; 3e3ff
 Function3e40b: ; 3e40b
 	call Function3f2f4
 	ld c, $32
-	call DelayFrames
+	call DelayFrame ; was DelayFrames
 	ld hl, PlayerSubStatus4
 	res 6, [hl]
 	call SetEnemyTurn
@@ -5434,7 +5434,7 @@ Function3e40b: ; 3e40b
 
 Function3e459: ; 3e459
 	ld c, $32
-	call DelayFrames
+	call DelayFrame ; was DelayFrames
 	ld hl, $c535
 	ld bc, $050b
 	call ClearBox
@@ -5939,7 +5939,7 @@ Function3e786: ; 3e786
 	ld hl, BattleText_0x80c72
 	call StdBattleTextBox
 	ld c, 60
-	call DelayFrames
+	call DelayFrame ; was DelayFrames
 	xor a
 	ret
 ; 3e7c1
@@ -6780,7 +6780,7 @@ Function3ebd8: ; 3ebd8
 	ld a, $1
 	ld [hBGMapMode], a
 	ld c, $4
-	call DelayFrames
+	call DelayFrame ; was DelayFrames
 	pop hl
 	pop bc
 	dec hl
@@ -7578,7 +7578,7 @@ Function3ee3b: ; 3ee3b
 	ld a, $28
 	call Predef
 	ld c, $1e
-	call DelayFrames
+	call DelayFrame ; was DelayFrames
 	call Functiona80
 	call Function30b4
 	xor a
@@ -7843,7 +7843,7 @@ Function3f21b: ; 3f21b
 	ld de, SFX_EXP_BAR
 	call PlaySFX
 	ld c, 10
-	call DelayFrames
+	call DelayFrame ; was DelayFrames
 	pop bc
 	ret
 ; 3f22c
@@ -7861,7 +7861,7 @@ Function3f22c: ; 3f22c
 	ld a, $1
 	ld [hBGMapMode], a
 	ld c, d
-	call DelayFrames
+	call DelayFrame ; was DelayFrames
 	xor a
 	ld [hBGMapMode], a
 	pop bc
@@ -7877,7 +7877,7 @@ Function3f22c: ; 3f22c
 	ld a, $1
 	ld [hBGMapMode], a
 	ld c, d
-	call DelayFrames
+	call DelayFrame ; was DelayFrames
 	xor a
 	ld [hBGMapMode], a
 	dec d
@@ -8571,7 +8571,7 @@ Function3f6a5: ; 3f6a5
 	jr z, .asm_3f6b7
 	call Function3f759
 	ld c, $96
-	call DelayFrames
+	call DelayFrame ; was DelayFrames
 	call Function3f77c
 	ret
 
@@ -8705,7 +8705,7 @@ Function3f77c: ; 3f77c
 	call PlaceString
 	callba Function106187
 	ld c, $c8
-	call DelayFrames
+	call DelayFrame ; was DelayFrames
 	ld a, $1
 	call GetSRAMBank
 	call Function3fa42
@@ -8719,7 +8719,7 @@ Function3f77c: ; 3f77c
 
 .asm_3f7ee
 	ld c, $c8
-	call DelayFrames
+	call DelayFrame ; was DelayFrames
 	call ClearTileMap
 	ret
 ; 3f7f7
@@ -8738,7 +8738,7 @@ Function3f80f: ; 3f80f
 	ld de, .Invalid
 	call PlaceString
 	ld c, $c8
-	call DelayFrames
+	call DelayFrame ; was DelayFrames
 	call ClearTileMap
 	ret
 ; 3f821
@@ -8769,7 +8769,7 @@ Function3f836: ; 3f836
 	call GetSGBLayout
 	call Function32f9
 	ld c, $8
-	call DelayFrames
+	call DelayFrame ; was DelayFrames
 	call Functiona80
 	ret
 ; 3f85f
@@ -9405,7 +9405,7 @@ BattleStartMessage: ; 3fc8b
 	call WaitSFX
 
 	ld c, 20
-	call DelayFrames
+	call DelayFrame ; was DelayFrames
 
 	callba Function39939
 
