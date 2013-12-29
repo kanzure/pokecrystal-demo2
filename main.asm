@@ -4725,11 +4725,13 @@ Function61cd: ; 61cd
 
 
 Function620b: ; 620b
-	; skip copyright intro
+
+; skip copyright intro
 	;callab Functione4579
+	rept 6
 	nop
-	nop
-	nop
+	endr
+
 	jr c, Function6219
 	callba Functione48ac
 
@@ -9409,7 +9411,7 @@ CheckDirection: ; c9cb
 ; c9e7
 
 
-TrySurfOW: ; c9e7
+TrySurfOW_Old: ; c9e7
 ; Checking a tile in the overworld.
 ; Return carry if surfing is allowed.
 
@@ -13997,6 +13999,99 @@ UnknownText_0xfa06: ; 0xfa06
 ; 0xfa0b
 
 
+
+CheckPartyType:
+; Check if a Pokemon in your party is type d.
+
+	ld e, 0
+	xor a
+	ld [CurPartyMon], a
+
+.checkmon
+	ld c, e
+	ld b, 0
+	ld hl, PartySpecies
+	add hl, bc
+
+	ld a, [hl]
+	and a
+	jr z, .quit
+	cp -1
+	jr z, .quit
+	cp EGG
+	jr z, .nextmon
+
+	push hl
+	call GetBaseData
+	pop hl
+	ld a, [BaseType1]
+	cp d
+	jr z, .match
+	ld a, [BaseType2]
+	jr z, .match
+
+.nextmon
+	inc e
+	jr .checkmon
+
+.match
+	ld a, e
+	ld [CurPartyMon], a
+	xor a
+	ret
+
+.quit
+	scf
+	ret
+
+
+TrySurfOW:
+; Checking a tile in the overworld.
+; Return carry if surfing is allowed.
+
+; Don't ask to surf if already surfing.
+	ld a, [PlayerState]
+	cp PLAYER_SURF_PIKA
+	jr z, .quit
+	cp PLAYER_SURF
+	jr z, .quit
+
+; Must be facing water.
+	ld a, [EngineBuffer1]
+	call GetTileCollision
+	cp 1 ; surfable
+	jr nz, .quit
+
+; Check tile permissions.
+	call CheckDirection
+	jr c, .quit
+
+	ld d, WATER
+	call CheckPartyType
+	jr c, .quit
+
+	ld hl, BikeFlags
+	bit 1, [hl] ; always on bike (can't surf)
+	jr nz, .quit
+
+	call GetSurfType
+	ld [MovementType], a
+	call GetPartyNick
+
+	ld a, BANK(AskSurfScript)
+	ld hl, AskSurfScript
+	call CallScript
+
+	scf
+	ret
+
+.quit
+	xor a
+	ret
+
+
+
+
 SECTION "bank4", ROMX, BANK[$4]
 
 Function10000: ; 10000
@@ -17485,7 +17580,11 @@ StartMenu: ; 125cd
 	ld de, SFX_MENU
 	call PlaySFX
 
-	callba Function6454
+    ld a, 8 ; NewMenu
+    rst $18
+    ret
+    nop
+	;callba Function6454
 
 	ld hl, StatusFlags2
 	bit 2, [hl] ; bug catching contest
@@ -21881,7 +21980,7 @@ Group1Sprites: ; 146a1
 	db SPRITE_BIG_ONIX
 	db SPRITE_SUDOWOODO
 	db SPRITE_BIG_SNORLAX
-	db SPRITE_OLIVINE_RIVAL
+	db SPRITE_FISHING_GURU
 	db SPRITE_POKEFAN_M
 	db SPRITE_LASS
 	db SPRITE_BUENA
@@ -44439,17 +44538,16 @@ NewGameMenu: ; 0x49d6c
 	db 1
 	db NEW_GAME
 	db $ff
-	db $ff
 
 ContinueMenu: ; 0x49d70
 	db 2
 	db CONTINUE
 	db NEW_GAME
 	db $ff
-	db $ff
 
 MobileMysteryMenu: ; 0x49d75
 	db 5
+	db 0, 0 ; herp, derp
 	db CONTINUE
 	db NEW_GAME
 	db OPTION
