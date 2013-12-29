@@ -343,7 +343,7 @@ NamingScreenDisableVWF:
     ld a, 1
     ld [VWFDisabled], a
     
-    ld hl, $c6d0 ; original code
+    ;ld hl, $c6d0 ; original code
     ret
 
 
@@ -351,7 +351,7 @@ NamingScreenEnableVWF:
     xor a
     ld [VWFDisabled], a
     
-    call $092f ; original code
+    ;call $092f ; original code
     ret
 
 DecStringDepth:

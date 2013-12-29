@@ -4369,20 +4369,27 @@ Function5f84: ; 5f84
 
 OakSpeech: ; 0x5f99
 CallPlayerNamingScreen: ; 0x5f99
+    ld a, 2
+    rst $18 ; disable vwf
+    
 	ld b, $1
 	ld de, $d47d
 	ld a, $4
 	ld hl, $56c1
 	rst $8
 	call ClearTileMap
+	
+    ld a, 3
+    rst $18 ; enable vwf
+	
 	ret
 
 	;callba Function90672
 	;call Function4dd
 	;call ClearTileMap
 	;ld de, MUSIC_ROUTE_30
-	call PlayMusic
-	call Function4a3
+	;call PlayMusic
+	;call Function4a3
 	call Function4b6
 	xor a
 	ld [CurPartySpecies], a
@@ -17776,7 +17783,10 @@ StartMenu: ; 125cd
 .no_pokegear
 
 	ld a, 3 ; status
-	call .AppendMenuList
+	;call .AppendMenuList
+    nop
+    nop
+    nop
 
 	ld a, [InLinkBattle]
 	and a
@@ -17791,9 +17801,15 @@ StartMenu: ; 125cd
 .no_save
 
 	ld a, 5 ; option
-	call .AppendMenuList
+	nop
+	nop
+	nop
+	;call .AppendMenuList
 	ld a, 6 ; exit
-	call .AppendMenuList
+	;call .AppendMenuList
+	nop
+	nop
+	nop
 	ld a, c
 	ld [MenuItemsList], a
 	ret
@@ -17825,7 +17841,7 @@ StartMenu: ; 125cd
 
 .PrintMenuAccount ; 128a7
 	call .IsMenuAccountOn
-	ret z
+	ret ; no account
 	call .DrawMenuAccount
 	decoord 0, 14
 	jp .MenuDesc
@@ -17833,7 +17849,7 @@ StartMenu: ; 125cd
 
 .DrawMenuAccount ; 128b4
 	call .IsMenuAccountOn
-	ret z
+	ret ; no account
 	hlcoord 0, 13
 	ld bc, $050a
 	call ClearBox
@@ -44394,9 +44410,9 @@ MenuData2_0x49d1c: ; 49d1c
 ; 49d20
 
 MainMenuText: ; 49d24
-	db "CONTINUE@"
-	db "NEW GAME@"
-	db "OPTION@"
+	db "Continue@"
+	db "New Game@"
+	db "Option@"
 	db "MYSTERY GIFT@"
 	db "MOBILE@"
 	db "MOBILE STUDIUM@"
@@ -44420,16 +44436,16 @@ MOBILE_STUDIUM EQU 5
 MainMenuItems:
 
 NewGameMenu: ; 0x49d6c
-	db 2
+	db 1
 	db NEW_GAME
-	db OPTION
+	db $ff
 	db $ff
 
 ContinueMenu: ; 0x49d70
-	db 3
+	db 2
 	db CONTINUE
 	db NEW_GAME
-	db OPTION
+	db $ff
 	db $ff
 
 MobileMysteryMenu: ; 0x49d75
