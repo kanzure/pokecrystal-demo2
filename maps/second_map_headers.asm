@@ -8913,3 +8913,22 @@ StartingArea_SecondMapHeader:
 	; connections
 	db 0
 
+StartingAreaEast_SecondMapHeader:
+	; border block
+	db $35 ; water hopefully
+
+	; height, width
+	db 20, 20
+
+	; blockdata (bank-then-pointer)
+	dbw BANK(StartingAreaEast_BlockData), StartingAreaEast_BlockData
+
+	; script header (bank-then-pointer)
+	dbw BANK(StartingAreaEast_MapScriptHeader), StartingAreaEast_MapScriptHeader
+
+	; map event header (bank-then-pointer)
+	dw StartingAreaEast_MapEventHeader
+
+	; connections
+	db 0
+
