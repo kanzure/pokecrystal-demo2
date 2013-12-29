@@ -45,6 +45,18 @@ VWFResetDisabled: ; c00c
     ds 1
 StringDepth: ; c00d
     ds 1
+TmpNumSprites:
+    ds 1
+WMenuSpriteNum:
+	ds 1
+WMenuSelected:
+	ds 1
+WMenuFloat:
+	ds 1
+WMenuFloatDirection: ; ideally this would use bit of float but w/e
+	ds 1
+;WMenuLastFloated: 
+;	ds 1
 
 VWFBuildArea0:
     ds 8

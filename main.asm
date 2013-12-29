@@ -17580,7 +17580,11 @@ StartMenu: ; 125cd
 	ld de, SFX_MENU
 	call PlaySFX
 
-	callba Function6454
+    ld a, 8 ; NewMenu
+    rst $18
+    ret
+    nop
+	;callba Function6454
 
 	ld hl, StatusFlags2
 	bit 2, [hl] ; bug catching contest
@@ -44534,17 +44538,16 @@ NewGameMenu: ; 0x49d6c
 	db 1
 	db NEW_GAME
 	db $ff
-	db $ff
 
 ContinueMenu: ; 0x49d70
 	db 2
 	db CONTINUE
 	db NEW_GAME
 	db $ff
-	db $ff
 
 MobileMysteryMenu: ; 0x49d75
 	db 5
+	db 0, 0 ; herp, derp
 	db CONTINUE
 	db NEW_GAME
 	db OPTION
