@@ -8443,15 +8443,21 @@ Function5f84: ; 5f84
 	jp PrintNum
 ; 5f99
 
-
 OakSpeech: ; 0x5f99
-	callba Function90672
-	call Function4dd
+CallPlayerNamingScreen: ; 0x5f99
+	ld b, $1
+	ld de, $d47d
+	ld a, $4
+	ld hl, $56c1
+	rst $8
 	call ClearTileMap
+	ret
 
-	ld de, MUSIC_ROUTE_30
+	;callba Function90672
+	;call Function4dd
+	;call ClearTileMap
+	;ld de, MUSIC_ROUTE_30
 	call PlayMusic
-
 	call Function4a3
 	call Function4b6
 	xor a
