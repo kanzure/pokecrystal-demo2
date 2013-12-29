@@ -36777,8 +36777,11 @@ PlayBattleMusic: ; 2ee6c
 	push de
 	push bc
 
-	xor a
-	ld [MusicFade], a
+	ld a, 9 ; PlayBattleMusicAdvice
+	rst $18
+	nop
+	;xor a
+	;ld [MusicFade], a
 	ld de, MUSIC_NONE
 	call PlayMusic
 	call DelayFrame

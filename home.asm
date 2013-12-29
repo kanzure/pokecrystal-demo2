@@ -3061,7 +3061,10 @@ Function3d47: ; 3d47
 	ld a, [CurMusic]
 	ld e, a
 	ld d, 0
-	call PlayMusic
+	
+	ld a, $a
+	rst $18
+	;call PlayMusic
 	pop af
 	pop bc
 	pop de

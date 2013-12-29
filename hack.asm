@@ -46,6 +46,8 @@ HackPredefTable:
     dw VWFResetDisable ; 6
     dw VWFResetEnableAfterOne ; 7
     dw NewMenu ; 8
+    dw PlayBattleMusicAdvice ; 9
+    dw PlayOWMusicAfterBattleAdvice ; $a
 
 WriteCharAdvice:
     ld a, [VWFDisabled]
@@ -757,9 +759,37 @@ NewMenuSave:
 MenuSprites:
 	INCBIN "gfx/menusprites.2bpp"
 
+PlayBattleMusicAdvice:
+	; back up old music state
+	ld bc, $1c0
+	ld hl, $c100
+	ld de, $d000
+	ld a, $4
+	di
+	ld [rSVBK], a
+	call CopyBytes ; copy bc bytes from hl to de
+	ld a, $1
+	ld [rSVBK], a
+	ei
 
+	; o
+	xor a
+	ld [MusicFade], a
+	ret
 
-
+PlayOWMusicAfterBattleAdvice:
+	ld bc, $1c0
+	ld de, $c100
+	ld hl, $d000
+	ld a, $4
+	di
+	ld [rSVBK], a
+	call CopyBytes ; copy bc bytes from hl to de
+	ld a, $1
+	ld [rSVBK], a
+	ei
+	
+	ret
 
 
 
