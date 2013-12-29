@@ -7,6 +7,103 @@ NULL:
 INCLUDE "rst.asm"
 INCLUDE "interrupts.asm"
 
+Rst18Cont:
+    ld a, [hROMBank]
+	ld [hBankOld],a
+	ld a, BANK(HackPredef)
+	rst Bankswitch
+    call HackPredef
+    ld [hTempA], a
+    ld a, [hBankOld]
+	rst Bankswitch
+	ld a, [hTempA]
+	ret
+
+PlaceStringAdvice:
+    ld a, $1
+    rst $18
+    ld a, [StringDepth]
+    inc a
+    ld [StringDepth], a
+	push hl ; orig
+	jp PlaceNextChar
+
+PlaceNextCharAdvice:
+    ld a, [de] ; 1
+	cp "@" ; 2
+	jp nz, CheckDict ; 2 -> 3
+	
+	ld b, h
+	ld c, l
+	pop hl
+	ld a, $5
+	rst $18
+	ret
+	pop de
+
+	jp PlaceNextCharPointcut
+
+Char4F: ; 12ea ; newline char
+    ld a, $4
+    rst $18
+	pop hl
+	ld hl, $c5e1
+	push hl
+	jp NextChar
+
+Char55: ; $1345 ; newline char
+    ld a, $4
+    rst $18
+	push de
+	ld de, $1354
+	ld b, h
+	ld c, l
+	call $1078
+	ld h, b
+	ld l, c
+	pop de
+	jp NextChar
+
+Char4e: ; newline char
+    ld a, $4
+    rst $18
+    jp $12a7
+
+Char57: ; end char
+	ld a, $5
+	rst $18
+    jp $137c
+Char58: ; end char
+	ld a, $5
+	rst $18
+    jp $135a
+
+Char51: ; newline char
+    ld a, $4
+    rst $18
+    jp Function12f2
+
+TextScriptCmdTextFromRam: ; was 1449
+    ld a, $6
+    rst $18
+	ld a, [hli]
+	ld e, a
+	ld a, [hli]
+	ld d, a
+	push hl
+	ld h, b
+	ld l, c
+	call PlaceString
+	pop hl
+    ld a, $7
+    rst $18
+	ret
+; 0x1455
+
+ParseTextScript:
+    ld a, $4
+    rst $18
+    jp $13f6
 
 SECTION "Header", ROM0[$100]
 

@@ -1,3 +1,10 @@
+hBankOld           EQU $ffe9
+hBankNew           EQU $ffea
+hTempA             EQU $ffeb
+hChar              EQU $ffec
+
+; original:
+
 hPushOAM           EQU $ff80
 
 hBuffer            EQU $ff8b

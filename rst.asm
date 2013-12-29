@@ -13,7 +13,8 @@ SECTION "rst10",ROM0[Bankswitch]
 	ret
 
 SECTION "rst18",ROM0[$18]
-	rst $38
+    ld [hTempA], a ; 3
+	jp Rst18Cont
 
 SECTION "rst20",ROM0[$20]
 	rst $38

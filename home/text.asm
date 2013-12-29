@@ -178,21 +178,18 @@ Function106c: ; 106c
 	ret
 ; 1078
 
-
-
+; Hacking this up a bit so I can insert a pointcut.
 PlaceString: ; 1078
-	push hl
+    jp PlaceStringAdvice ; 3, prev 1
 
 PlaceNextChar: ; 1079
-	ld a, [de]
-	cp "@"
-	jr nz, CheckDict
-	ld b, h
-	ld c, l
-	pop hl
-	ret
-	pop de
-
+	jp PlaceNextCharAdvice
+PlaceNextCharPointcut:
+    nop
+    nop
+    nop
+    nop
+    nop
 NextChar: ; 1083
 	inc de
 	jp PlaceNextChar
@@ -203,7 +200,7 @@ CheckDict: ; 1087
 	cp $4f
 	jp z, Char4F
 	cp $4e
-	jp z, Function12a7
+	jp z, Char4e
 	cp $16
 	jp z, Function12b9
 	and a
@@ -212,8 +209,8 @@ CheckDict: ; 1087
 	jp z, $1337
 	cp $4b
 	jp z, Char4B
-	cp $51 ; Player name
-	jp z, Function12f2
+	cp $51 
+	jp z, Char51
 	cp $49
 	jp z, Function1186
 	cp $52 ; Mother name
@@ -249,9 +246,9 @@ CheckDict: ; 1087
 	cp $56
 	jp z, Function11d3
 	cp $57
-	jp z, $137c
+	jp z, Char57
 	cp $58
-	jp z, Function135a
+	jp z, Char58
 	cp $4a
 	jp z, Function11da
 	cp $24
@@ -306,11 +303,13 @@ CheckDict: ; 1087
 	ld b, $e4
 	call Function13c6
 .asm_1174
-	ld [hli], a
-	call PrintLetterDelay
+    ld [hChar], a ; 2
+    xor a ; 1
+    rst $18 ; 1
+	;ld [hli], a ; 1
+	;call PrintLetterDelay ; 3
 	jp NextChar
 ; 0x117b
-
 
 Function117b: ; 117b
 	ld c, l
@@ -581,7 +580,7 @@ Function12b9: ; 12b9
 ; 12ea
 
 
-Char4F: ; 12ea
+Char4F_old: ; 12ea
 	pop hl
 	hlcoord 1, 16
 	push hl
@@ -638,7 +637,7 @@ Char4B: ; 131f
 ; 1345
 
 
-Char55: ; 1345
+Char55_old: ; 1345
 	push de
 	ld de, Text_1354
 	ld b, h
@@ -819,7 +818,7 @@ Function13ff: ; 13ff
 
 TextCommands: ; 1410
 	dw Text_00
-	dw Text_01
+	dw TextScriptCmdTextFromRam
 	dw Text_02
 	dw Text_03
 	dw Text_04
@@ -898,7 +897,7 @@ Text_16: ; 1455
 	push hl
 	ld h, d
 	ld l, e
-	call Function13f6
+	call ParseTextScript
 	pop hl
 
 	pop af
