@@ -518,13 +518,28 @@ RedrawMenuIcons:
     call WriteMenuSprite
     ret
 
+LoadMenuSprites:
+    ld de, MenuSprites
+    ld hl, $8f00
+    ld bc, (BANK(MenuSprites)<<8)+$10
+    ret
+
 NewMenu:
-	callba Function6454
-	;call MenuFunc_1e7f
-	call Function2e31
-	call Function2e20
-	callba Function64bf
-	call Function1bee
+	;callba Function6454
+	;;call MenuFunc_1e7f
+	
+	;call Function1c66
+	;call Function1ebd
+	;call Function1ea6
+	;;call Function1cbb
+	
+	;call Function1cfd
+	;call Function1c53
+	
+	;call Function2e31
+	;call Function2e20
+	;callba Function64bf
+	;call Function1bee
 	
 	ld hl, VramState
 	res 0, [hl]
@@ -535,17 +550,16 @@ NewMenu:
 	ld a, $a0
 	ld [$ffbd], a ; numsprites
 	
-    ld de, MenuSprites
-    ld hl, $8f00
-    ld bc, (BANK(MenuSprites)<<8)+$10
+	call LoadMenuSprites
+	
     ld a, 1
     ld [rVBK], a
     call Request2bpp
     ld a, 0
     ld [rVBK], a
     
-	;call ResetWindow
-	callba Function6454
+	call ResetWindow
+	;callba Function6454
 	
 	call Function2e31
 	call Function2e20
@@ -577,6 +591,7 @@ NewMenu:
 	
 	xor a
 	ld [WMenuSelected], a
+.opened
 	ld a, 1
 	ld [WMenuFloat], a
 .loop
@@ -632,7 +647,8 @@ NewMenu:
 	;call Function2dcf
 
 .a
-	call Function1bee
+	call PlayClickSFX
+	;call Function1bee
 	xor a
 	ld [hBGMapMode], a
 	ld hl, VramState
@@ -641,8 +657,8 @@ NewMenu:
 	ld a, [WMenuSelected]
 	rst $28 ; JumpTable
 	and a
-	jp z, NewMenu
-	jp .closedloop
+	jr z, .opened
+	jr .closedloop
 	
 .exit
 
@@ -663,6 +679,9 @@ NewMenu:
 	jr nz, .closeloop
 .closedloop
 
+	xor a
+	ld [hBGMapMode], a
+
 	ld hl, VramState
 	set 0, [hl]
 	ld a, [TmpNumSprites]
@@ -675,7 +694,7 @@ NewMenu:
 	call Functione5f
 	pop af
 	ld [hOAMUpdate], a
-	;call Function2dcf
+	call Function2dcf
 	call UpdateTimePals
 	
 	
@@ -688,7 +707,8 @@ MenuActionPointers:
 	dw NewMenuSave
 
 NewMenuPokemon:
-	;callba StartMenu_Pokemon
+	callba StartMenu_Pokemon
+	ret
 
 	ld a, [PartyCount]
 	and a
@@ -702,9 +722,9 @@ NewMenuPokemon:
 	call WhiteBGMap
 
 .menu
-	;callba Function5004f
-	;callba Function50405
-	;callba Function503e0
+	callba Function5004f
+	callba Function50405
+	callba Function503e0
 
 .menunoreload
 	callba WritePartyMenuTilemap
@@ -745,13 +765,17 @@ NewMenuBag:
 	jr nz, .asm_12970
 	call Function2b3c
 	ld a, 0
+	call LoadMenuSprites
 	ret
 .asm_12970
 	call Function2b4d
 	ld a, 4
+	call LoadMenuSprites
 	ret
 
 NewMenuProfile:
+	; broken
+	ret
 	call FadeToMenu
 	callba Function25105
 	call Function2b3c
