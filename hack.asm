@@ -524,6 +524,13 @@ LoadMenuSprites:
     ld de, MenuSprites
     ld hl, $8f00
     ld bc, (BANK(MenuSprites)<<8)+$10
+	
+    ld a, 1
+    ld [rVBK], a
+    call Request2bpp
+    ld a, 0
+    ld [rVBK], a
+    
     ret
 
 NewMenu:
@@ -553,13 +560,6 @@ NewMenu:
 	ld [$ffbd], a ; numsprites
 	
 	call LoadMenuSprites
-	
-    ld a, 1
-    ld [rVBK], a
-    call Request2bpp
-    ld a, 0
-    ld [rVBK], a
-    
 	call ResetWindow
 	;callba Function6454
 	
@@ -714,6 +714,7 @@ NewMenuPokemon:
 	jr z, .return
 	callba StartMenu_Pokemon
 .return
+	call LoadMenuSprites
 	xor a
 	ret
 
@@ -724,8 +725,8 @@ NewMenuBag:
 	and a
 	jr nz, .asm_12970
 	call Function2b3c
-	ld a, 0
 	call LoadMenuSprites
+	ld a, 0
 	ret
 .asm_12970
 	call Function2b4d

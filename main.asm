@@ -44721,7 +44721,10 @@ Function49e27: ; 49e27
 
 
 Function49e3d: ; 49e3d
-	ld a, [$cfcd]
+	ret ; we don't want time display because it doesn't play nice w/ vwf
+	nop
+	nop
+	;ld a, [$cfcd]
 	and a
 	ret z
 	call Function6e3
