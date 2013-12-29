@@ -9411,7 +9411,7 @@ CheckDirection: ; c9cb
 ; c9e7
 
 
-TrySurfOW: ; c9e7
+TrySurfOW_Old: ; c9e7
 ; Checking a tile in the overworld.
 ; Return carry if surfing is allowed.
 
@@ -13997,6 +13997,99 @@ UnknownText_0xfa06: ; 0xfa06
 	text_jump UnknownText_0x1c5ea8
 	db "@"
 ; 0xfa0b
+
+
+
+CheckPartyType:
+; Check if a Pokemon in your party is type d.
+
+	ld e, 0
+	xor a
+	ld [CurPartyMon], a
+
+.checkmon
+	ld c, e
+	ld b, 0
+	ld hl, PartySpecies
+	add hl, bc
+
+	ld a, [hl]
+	and a
+	jr z, .quit
+	cp -1
+	jr z, .quit
+	cp EGG
+	jr z, .nextmon
+
+	push hl
+	call GetBaseData
+	pop hl
+	ld a, [BaseType1]
+	cp d
+	jr z, .match
+	ld a, [BaseType2]
+	jr z, .match
+
+.nextmon
+	inc e
+	jr .checkmon
+
+.match
+	ld a, e
+	ld [CurPartyMon], a
+	xor a
+	ret
+
+.quit
+	scf
+	ret
+
+
+TrySurfOW:
+; Checking a tile in the overworld.
+; Return carry if surfing is allowed.
+
+; Don't ask to surf if already surfing.
+	ld a, [PlayerState]
+	cp PLAYER_SURF_PIKA
+	jr z, .quit
+	cp PLAYER_SURF
+	jr z, .quit
+
+; Must be facing water.
+	ld a, [EngineBuffer1]
+	call GetTileCollision
+	cp 1 ; surfable
+	jr nz, .quit
+
+; Check tile permissions.
+	call CheckDirection
+	jr c, .quit
+
+	ld d, WATER
+	call CheckPartyType
+	jr c, .quit
+
+	ld hl, BikeFlags
+	bit 1, [hl] ; always on bike (can't surf)
+	jr nz, .quit
+
+	call GetSurfType
+	ld [MovementType], a
+	call GetPartyNick
+
+	ld a, BANK(AskSurfScript)
+	ld hl, AskSurfScript
+	call CallScript
+
+	scf
+	ret
+
+.quit
+	xor a
+	ret
+
+
 
 
 SECTION "bank4", ROMX, BANK[$4]
