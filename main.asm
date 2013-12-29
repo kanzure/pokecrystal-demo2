@@ -8795,7 +8795,11 @@ Function61cd: ; 61cd
 
 
 Function620b: ; 620b
-	callab Functione4579
+	; skip copyright intro
+	;callab Functione4579
+	nop
+	nop
+	nop
 	jr c, Function6219
 	callba Functione48ac
 
@@ -102016,12 +102020,22 @@ Functione4579: ; e4579
 	ld b, $19
 	call GetSGBLayout
 	call Function32f9
-	ld c, 10
-	call DelayFrames
+	;ld c, 10
+	;call DelayFrames
+	nop
+	nop
+	nop
+	nop
+	nop
 	callab Copyright
 	call WaitBGMap
-	ld c, $64
-	call DelayFrames
+	;ld c, $1
+	;call DelayFrames
+	nop
+	nop
+	nop
+	nop
+	nop
 	call ClearTileMap
 	callba Function4ea82
 	call Functione45e8
