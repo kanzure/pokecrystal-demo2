@@ -2,6 +2,8 @@ hBankOld           EQU $ffe9
 hBankNew           EQU $ffea
 hTempA             EQU $ffeb
 hChar              EQU $ffec
+hTemp0             EQU $ffed
+hTemp1             EQU $ffee
 
 ; original:
 
