@@ -383,5 +383,35 @@ VWFResetEnable:
 
 
 NewMenu:
-    callba Function6454
-    ret
+	call Function2e08
+    ;callba Function6454
+	;call Function2e31
+	;call Function2e20
+	;callba Function64bf
+	
+	hlcoord 5, 5
+	ld de, TestString
+	call PlaceString
+	
+	call Function269a
+	call Functiona46
+	call Function2dcf
+	ret
+
+TestString:
+	db "Test@"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
