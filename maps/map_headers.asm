@@ -187,6 +187,17 @@ OlivineCity_MapHeader: ; 0x940a9
 ; 0x940b2
 
 
+StartingArea_MapHeader:
+	; bank, tileset, permission
+	db BANK(StartingArea_SecondMapHeader), 2, 2
+
+	; second map header
+	dw StartingArea_SecondMapHeader
+
+	; location on world map, music, time of day, fishing group
+	db STARTING_AREA, MUSIC_AZALEA_TOWN, 0, 1
+
+
 MapGroup2:
 
 MahoganyRedGyaradosSpeechHouse_MapHeader: ; 0x940b2
@@ -4014,7 +4025,7 @@ KrissHouse2F_MapHeader: ; 0x94caf
 	dw KrissHouse2F_SecondMapHeader
 
 	; location on world map, music, time of day, fishing group
-	db NEW_BARK_TOWN, MUSIC_NEW_BARK_TOWN, 1, 1
+	db STARTING_AREA, MUSIC_AZALEA_TOWN, 1, 1
 ; 0x94cb8
 
 KrissNeighborsHouse_MapHeader: ; 0x94cb8

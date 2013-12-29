@@ -8894,3 +8894,22 @@ Route31VioletGate_SecondMapHeader: ; 0x966a4
 	db 0
 ; 0x966b0
 
+StartingArea_SecondMapHeader:
+	; border block
+	db $0
+
+	; height, width
+	db 20, 20
+
+	; blockdata (bank-then-pointer)
+	dbw BANK(StartingArea_BlockData), StartingArea_BlockData
+
+	; script header (bank-then-pointer)
+	dbw BANK(StartingArea_MapScriptHeader), StartingArea_MapScriptHeader
+
+	; map event header (bank-then-pointer)
+	dw StartingArea_MapEventHeader
+
+	; connections
+	db 0
+

@@ -101,3 +101,6 @@ KANTO_LANDMARK EQU const_value
 	const ROUTE_28
 	const FAST_SHIP
 
+
+	const STARTING_AREA
+

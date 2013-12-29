@@ -592,3 +592,6 @@ EVENT_SAW_SUICUNE_AT_CIANWOOD_CITY                     EQU $7ae
 EVENT_SAW_SUICUNE_ON_ROUTE_42                          EQU $7af
 EVENT_SAW_SUICUNE_ON_ROUTE_36                          EQU $7b0
 EVENT_SET_WHEN_FOUGHT_HO_OH                            EQU $7b7
+
+
+EVENT_ENTERED_THE_FISHING_COMPETITION                  EQU $7d0
