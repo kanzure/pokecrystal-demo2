@@ -707,54 +707,12 @@ MenuActionPointers:
 	dw NewMenuSave
 
 NewMenuPokemon:
-	callba StartMenu_Pokemon
-	ret
-
 	ld a, [PartyCount]
 	and a
 	jr z, .return
-
-	call FadeToMenu
-	
-.choosemenu
-	xor a
-	ld [PartyMenuActionText], a ; Choose a POKéMON.
-	call WhiteBGMap
-
-.menu
-	callba Function5004f
-	callba Function50405
-	callba Function503e0
-
-.menunoreload
-	callba WritePartyMenuTilemap
-	callba PrintPartyMenuText
-	call WaitBGMap
-	call Function32f9 ; load regular palettes?
-	call DelayFrame
-	callba PartyMenuSelect
-	jr c, .return ; if cancelled or pressed B
-
-	call PokemonActionSubmenu
-	cp 3
-	jr z, .menu
-	cp 0
-	jr z, .choosemenu
-	cp 1
-	jr z, .menunoreload
-	cp 2
-	jr z, .quit
-
+	callba StartMenu_Pokemon
 .return
-	;call Function2b3c
-	ld a, 0
-	ret
-
-.quit
-	ld a, b
-	push af
-	call Function2b4d
-	pop af
+	xor a
 	ret
 
 NewMenuBag:
@@ -769,8 +727,11 @@ NewMenuBag:
 	ret
 .asm_12970
 	call Function2b4d
-	ld a, 4
+	;call Function1c07
+	ld a, $80
+	ld [$ffa0], a
 	call LoadMenuSprites
+	ld a, 4
 	ret
 
 NewMenuProfile:
