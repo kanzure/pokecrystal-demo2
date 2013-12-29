@@ -4718,11 +4718,13 @@ Function61cd: ; 61cd
 
 
 Function620b: ; 620b
-	; skip copyright intro
+
+; skip copyright intro
 	;callab Functione4579
+	rept 6
 	nop
-	nop
-	nop
+	endr
+
 	jr c, Function6219
 	callba Functione48ac
 
