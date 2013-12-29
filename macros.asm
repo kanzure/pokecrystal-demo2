@@ -1,5 +1,54 @@
 ; rgbds macros
 
+
+; Generic connection macros for flush 20x20 maps
+
+connect_north: MACRO
+	; NORTH to GROUP, MAP, BlockData
+	db \1, \2
+	dw \3 + 20 * (20 - 3) ; strip pointer
+	dw $c800 + 3 ; strip destination
+	db 20 ; strip length
+	db 20 ; connected map width
+	db 20 * 2 - 1, 0 ; y, x offset
+	dw $c800 + (20 + 6) * (20) + 1 ; window
+	ENDM
+
+connect_south: MACRO
+	; SOUTH to GROUP, MAP, BlockData
+	db \1, \2
+	dw \3 ; strip destination
+	dw $c800 + (20 + 6) * (20 + 3) + 3 ; strip location
+	db 20 ; strip length
+	db 20 ; connected map width
+	db 0, 0 ; y, x offset
+	dw $c800 + 20 + 6 + 1 ; window
+	ENDM
+
+connect_west: MACRO
+	; WEST to GROUP, MAP, BlockData
+	db \1, \2
+	dw \3 + 20 - 3 ; strip pointer
+	dw $c800 + (20 + 6) * 3 ; strip destination
+	db 20 ; strip length
+	db 20 ; connected map width
+	db 0, 20 * 2 - 1 ; y, x offset
+	dw $c800 + 20 * 2 + 6 ; window
+	ENDM
+
+connect_east: MACRO
+	; EAST to GROUP, MAP, BlockData
+	db \1, \2
+	dw \3 ; strip pointer
+	dw $c800 + (20 + 6) * 4 - 3 ; strip destination
+	db 20 ; strip length
+	db 20 ; connected map width
+	db 0, 0 ; y, x offset
+	dw $c800 + 20 + 6 + 1 ; window
+	ENDM
+
+
+
 dwb: MACRO
 	dw \1
 	db \2
