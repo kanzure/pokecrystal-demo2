@@ -15,6 +15,7 @@ StartingAreaEast_BlockData: INCBIN "maps/StartingAreaEast.blk"
 SECTION "Hack Map Scripts", ROMX, BANK[HACK_MAP_SCRIPTS]
 
 INCLUDE "maps/StartingArea.asm"
+INCLUDE "maps/StartingAreaEast.asm"
 
 
 

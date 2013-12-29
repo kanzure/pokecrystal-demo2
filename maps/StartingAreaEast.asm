@@ -6,7 +6,7 @@ StartingAreaEast_MapScriptHeader:
 	db 0
 
 StartingAreaeastSignpost0Script: ;
-    jumptext MeadowSignpost
+	jumptext StartingAreaeastSignpost
 ; 0x1a80cb
 
 StartingAreaeastSignpost:
@@ -26,7 +26,7 @@ StartingAreaEast_MapEventHeader:
 
 	; signposts
 	db 1
-	signpost $23, $0b, $0, MapMeadowSignpost0Script ; wrong
+	signpost $23, $0b, $0, StartingAreaeastSignpost0Script ; wrong
 
 	; people-events
 	db 0
