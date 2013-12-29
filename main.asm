@@ -98535,8 +98535,7 @@ INCLUDE "tilesets/data_8.asm"
 
 
 SECTION "bank79", ROMX, BANK[$79]
-
-INCLUDE "hack.asm"
+; hack.asm
 
 SECTION "bank7A", ROMX, BANK[$7A]
 

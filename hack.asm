@@ -1,3 +1,8 @@
+INCLUDE "includes.asm"
+
+SECTION "bank79", ROMX, BANK[$79]
+
+
 HackPredef:
     ; save hl
     ld a, h
