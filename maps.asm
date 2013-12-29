@@ -9,6 +9,7 @@ INCLUDE "maps/second_map_headers.asm"
 SECTION "Hack Blockdata", ROMX, BANK[HACK_MAPS]
 
 StartingArea_BlockData: INCBIN "maps/StartingArea.blk"
+StartingAreaEast_BlockData: INCBIN "maps/StartingAreaEast.blk"
 
 
 SECTION "Hack Map Scripts", ROMX, BANK[HACK_MAP_SCRIPTS]

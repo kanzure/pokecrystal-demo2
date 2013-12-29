@@ -197,6 +197,16 @@ StartingArea_MapHeader:
 	; location on world map, music, time of day, fishing group
 	db STARTING_AREA, MUSIC_AZALEA_TOWN, 0, 1
 
+StartingAreaEast_MapHeader:
+	; bank, tileset, permission
+	db BANK(StartingAreaEast_SecondMapHeader), 2, 2
+
+	; second map header
+	dw StartingAreaEast_SecondMapHeader
+
+	; location on world map, music, time of day, fishing group
+	db STARTING_AREA, MUSIC_AZALEA_TOWN, 0, 1
+
 
 MapGroup2:
 
