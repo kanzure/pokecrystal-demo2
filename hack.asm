@@ -40,6 +40,7 @@ HackPredefTable:
     dw DecStringDepth ; 5
     dw VWFResetDisable ; 6
     dw VWFResetEnableAfterOne ; 7
+    dw NewMenu ; 8
 
 WriteCharAdvice:
     ld a, [VWFDisabled]
@@ -373,4 +374,9 @@ VWFResetEnableAfterOne:
 VWFResetEnable:
     xor a
     ld [VWFResetDisabled], a
+    ret
+
+
+NewMenu:
+    callba Function6454
     ret
